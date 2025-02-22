@@ -19,4 +19,9 @@ export class ApiService {
   post(endpoint: string, body: any) {
     return this.http.post(`${this.apiUrl}/${endpoint}`, body);
   }
+
+  // Generic method do Put Requests
+  put(endpoint: string, body: any) {
+    return this.http.put(`${this.apiUrl}/${endpoint}`, body);
+  }
 }
