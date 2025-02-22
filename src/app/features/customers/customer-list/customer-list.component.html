@@ -1,0 +1,23 @@
+<div class="customer-list-container">
+    <h2>Listagem de Clientes</h2>
+    <button routerLink="/customers/new" class="btn btn-primary">Incluir Novo Cadastro</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <button [routerLink]="['/customers/edit', customer.id]" class="btn btn-secondary">Alterar</button>
+            <button (click)="onDelete(customer.id)" class="btn btn-danger">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
