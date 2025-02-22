@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string = ''; // Error Message
 
   constructor(
     private fb: FormBuilder,
@@ -19,6 +20,8 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+      empresa_id: ['219'],
+      loja_id: ['1']
     });
   }
 
@@ -26,11 +29,10 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          console.log('Login successful', response);
-          this.router.navigate(['/customers']); // Redirect to customers list
+          this.router.navigate(['/Cadastro']);
         },
         error: (error) => {
-          console.error('Login failed', error);
+          this.errorMessage = 'Login failed. Please check your credentials.'; // Error Message
         },
       });
     }

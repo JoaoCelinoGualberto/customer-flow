@@ -8,8 +8,9 @@ import { CustomerService } from '../services/customer.service';
 })
 export class CustomerListComponent implements OnInit {
   customers: any[] = [];
+  errorMessage: string = '';
 
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService) { }
 
   ngOnInit(): void {
     this.loadCustomers();
@@ -18,7 +19,9 @@ export class CustomerListComponent implements OnInit {
   loadCustomers(): void {
     this.customerService.getCustomers().subscribe({
       next: (data) => (this.customers = data),
-      error: (error) => console.error('Error loading customers', error),
+      error: (error) => {
+        this.errorMessage = 'Failed to load customers. Please try again later.';
+      },
     });
   }
 }
