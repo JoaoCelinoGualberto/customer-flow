@@ -1,27 +1,48 @@
 <div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" formControlName="email" type="email" />
-      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        Email inválido.
+  <div class="card">
+    <div class="card-body text-center">
+      <div class="avatar-icon mb-3">
+        <i class="bi bi-person-circle"></i>
       </div>
+      <h2 class="card-title mb-4">CustomerFlow</h2>
+      <p class="text-center text-muted mb-4">Faça login para acessar sua conta</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            class="form-control"
+            placeholder="Digite seu email"
+            [ngClass]="{ 'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched }"
+          />
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-feedback">
+            Por favor, insira um email válido.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <input
+            id="senha"
+            formControlName="senha"
+            type="password"
+            class="form-control"
+            placeholder="Digite sua senha"
+            [ngClass]="{ 'is-invalid': loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched }"
+          />
+          <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" class="invalid-feedback">
+            Por favor, insira sua senha.
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid">
+          Login
+        </button>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+          {{ errorMessage }}
+        </div>
+      </form>
     </div>
-
-    <div>
-      <label for="senha">Senha:</label>
-      <input id="senha" formControlName="senha" type="password" />
-      <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched">
-        Senha obrigatória.
-      </div>
-    </div>
-
-
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
-  </form>
+  </div>
 </div>
