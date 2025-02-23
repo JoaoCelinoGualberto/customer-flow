@@ -1,0 +1,108 @@
+.customer-list-container {
+    padding: 3rem 4rem 0rem 4rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #343a40;
+        margin-bottom: 1.5rem;
+    }
+
+    hr {
+        border-top: 2px solid #007bff;
+        opacity: 0.7;
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken(#28a745, 10%);
+        }
+
+        i {
+            margin-right: 8px;
+        }
+    }
+
+    .table-responsive {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .table {
+        margin-bottom: 0;
+
+        thead {
+            background-color: #007bff;
+            color: #fff;
+
+            th {
+                font-weight: 500;
+                padding: 12px;
+            }
+        }
+
+        tbody {
+            tr {
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: rgba(0, 123, 255, 0.05);
+                }
+
+                td {
+                    padding: 12px;
+                    color: #495057;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: darken(#ffc107, 10%);
+            }
+
+            i {
+                font-size: 1rem;
+            }
+        }
+
+        .text-success {
+            color: #28a745;
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+    }
+}

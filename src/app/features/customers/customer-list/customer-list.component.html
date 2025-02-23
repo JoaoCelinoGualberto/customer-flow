@@ -1,23 +1,60 @@
 <div class="customer-list-container">
-  <h2>Listagem de Clientes</h2>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-person-lines-fill me-3" style="font-size: 2rem;"></i>
+      <h2 class="mb-0">Listagem de Clientes</h2>
+    </div>
+    <button class="btn btn-secondary" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </div>
+
+  <hr class="mb-4">
+
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-  <button routerLink="/customers/new" class="btn btn-primary">Incluir Novo Cadastro</button>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Email</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let customer of customers">
-        <td>{{ customer.nome }}</td>
-        <td>{{ customer.cadastro_contato_padrao?.email }}</td>
-        <td>
-          <button [routerLink]="['/customers/edit', customer.id]" class="btn btn-secondary">Alterar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <button routerLink="/customers/new" class="btn btn-primary mb-4">
+    <i class="bi bi-plus-circle"></i> Novo Cadastro
+  </button>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Endereço</th>
+          <th>Status</th>
+          <th>Data de Cadastro</th>
+          <th>CPF/CNPJ</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers" (click)="editCustomer(customer.id)" style="cursor: pointer;">
+          <td>{{ customer.nome }}</td>
+          <td>{{ customer.cadastro_contato_padrao?.email }}</td>
+          <td>{{ customer.cadastro_contato_padrao?.fone || 'N/A' }}</td>
+          <td>
+            {{ customer.cadastro_endereco_padrao?.endereco }},
+            {{ customer.cadastro_endereco_padrao?.endereco_numero }} -
+            {{ customer.cadastro_endereco_padrao?.endereco_bairro }}
+          </td>
+          <td>
+            <span [ngClass]="{'text-success': customer.ativo, 'text-danger': !customer.ativo}">
+              {{ customer.ativo ? 'Ativo' : 'Inativo' }}
+            </span>
+          </td>
+          <td>{{ customer.dt_inclusao | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ customer.cpf_cnpj || 'N/A' }}</td>
+          <td>
+            <button [routerLink]="['/customers/edit', customer.id]" class="btn btn-sm btn-warning rounded-circle"
+              data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
