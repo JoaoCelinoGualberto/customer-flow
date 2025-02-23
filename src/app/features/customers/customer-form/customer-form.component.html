@@ -1,103 +1,105 @@
 <div class="customer-form-container">
-    <h2>{{ isEditMode ? 'Editar Cliente' : 'Incluir Novo Cliente' }}</h2>
-    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-      <!-- Dados Básicos -->
-      <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" formControlName="nome" placeholder="Nome" />
-        <div *ngIf="customerForm.get('nome')?.invalid && customerForm.get('nome')?.touched">
-          O nome é obrigatório.
-        </div>
+  <h2>{{ isEditMode ? 'Editar Cliente' : 'Incluir Novo Cliente' }}</h2>
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <!-- Dados Básicos -->
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" formControlName="nome" placeholder="Nome" />
+      <div *ngIf="customerForm.get('nome')?.invalid && customerForm.get('nome')?.touched">
+        O nome é obrigatório.
       </div>
-  
-      <div class="form-group">
-        <label for="fantasia">Nome Fantasia</label>
-        <input type="text" id="fantasia" formControlName="fantasia" placeholder="Nome Fantasia" />
+    </div>
+
+    <div class="form-group">
+      <label for="fantasia">Nome Fantasia</label>
+      <input type="text" id="fantasia" formControlName="fantasia" placeholder="Nome Fantasia" />
+    </div>
+
+    <div class="form-group">
+      <label for="tipo_pessoa">Tipo de Pessoa</label>
+      <select id="tipo_pessoa" formControlName="tipo_pessoa">
+        <option value="Física">Física</option>
+        <option value="Jurídica">Jurídica</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="cpf_cnpj">CPF/CNPJ</label>
+      <input type="text" id="cpf_cnpj" formControlName="cpf_cnpj" placeholder="CPF/CNPJ" />
+      <div *ngIf="customerForm.get('cpf_cnpj')?.invalid && customerForm.get('cpf_cnpj')?.touched">
+        CPF/CNPJ é obrigatório.
       </div>
-  
-      <div class="form-group">
-        <label for="tipo_pessoa">Tipo de Pessoa</label>
-        <select id="tipo_pessoa" formControlName="tipo_pessoa">
-          <option value="Física">Física</option>
-          <option value="Jurídica">Jurídica</option>
+    </div>
+
+    <div class="form-group">
+      <label for="rg_ie">RG/IE</label>
+      <input type="text" id="rg_ie" formControlName="rg_ie" placeholder="RG/IE" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="Email" />
+      <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
+        Por favor, insira um email válido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fone">Telefone</label>
+      <input type="text" id="fone" formControlName="fone" placeholder="Telefone" />
+    </div>
+
+    <div class="form-group">
+      <label for="celular">Celular</label>
+      <input type="text" id="celular" formControlName="celular" placeholder="Celular" />
+    </div>
+
+    <div class="form-group">
+      <label for="ativo">Status</label>
+      <select id="ativo" formControlName="ativo">
+        <option [ngValue]="true">Ativo</option>
+        <option [ngValue]="false">Inativo</option>
         </select>
-      </div>
-  
+    </div>
+
+    <!-- Endereço Padrão -->
+    <h3>Endereço Padrão</h3>
+    <div formGroupName="cadastro_endereco_padrao">
       <div class="form-group">
-        <label for="cpf_cnpj">CPF/CNPJ</label>
-        <input type="text" id="cpf_cnpj" formControlName="cpf_cnpj" placeholder="CPF/CNPJ" />
-        <div *ngIf="customerForm.get('cpf_cnpj')?.invalid && customerForm.get('cpf_cnpj')?.touched">
-          CPF/CNPJ é obrigatório.
-        </div>
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" formControlName="endereco" placeholder="Endereço" />
       </div>
-  
+
       <div class="form-group">
-        <label for="rg_ie">RG/IE</label>
-        <input type="text" id="rg_ie" formControlName="rg_ie" placeholder="RG/IE" />
+        <label for="endereco_numero">Número</label>
+        <input type="text" id="endereco_numero" formControlName="endereco_numero" placeholder="Número" />
       </div>
-  
+
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email" placeholder="Email" />
-        <div *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
-          Por favor, insira um email válido.
-        </div>
+        <label for="endereco_bairro">Bairro</label>
+        <input type="text" id="endereco_bairro" formControlName="endereco_bairro" placeholder="Bairro" />
       </div>
-  
+
       <div class="form-group">
-        <label for="fone">Telefone</label>
-        <input type="text" id="fone" formControlName="fone" placeholder="Telefone" />
+        <label for="endereco_cep">CEP</label>
+        <input type="text" id="endereco_cep" formControlName="endereco_cep" placeholder="CEP" />
       </div>
-  
+
       <div class="form-group">
-        <label for="celular">Celular</label>
-        <input type="text" id="celular" formControlName="celular" placeholder="Celular" />
+        <label for="endereco_municipio_descricao">Município</label>
+        <input type="text" id="endereco_municipio_descricao" formControlName="endereco_municipio_descricao"
+          placeholder="Município" />
       </div>
-  
+
       <div class="form-group">
-        <label for="ativo">Status</label>
-        <select id="ativo" formControlName="ativo">
-          <option [ngValue]="true">Ativo</option>
-          <option [ngValue]="false">Inativo</option>
-        </select>
+        <label for="endereco_uf_sigla">UF</label>
+        <input type="text" id="endereco_uf_sigla" formControlName="endereco_uf_sigla" placeholder="UF" />
       </div>
-  
-      <!-- Endereço Padrão -->
-      <h3>Endereço Padrão</h3>
-      <div formGroupName="cadastro_endereco_padrao">
-        <div class="form-group">
-          <label for="endereco">Endereço</label>
-          <input type="text" id="endereco" formControlName="endereco" placeholder="Endereço" />
-        </div>
-  
-        <div class="form-group">
-          <label for="endereco_numero">Número</label>
-          <input type="text" id="endereco_numero" formControlName="endereco_numero" placeholder="Número" />
-        </div>
-  
-        <div class="form-group">
-          <label for="endereco_bairro">Bairro</label>
-          <input type="text" id="endereco_bairro" formControlName="endereco_bairro" placeholder="Bairro" />
-        </div>
-  
-        <div class="form-group">
-          <label for="endereco_cep">CEP</label>
-          <input type="text" id="endereco_cep" formControlName="endereco_cep" placeholder="CEP" />
-        </div>
-  
-        <div class="form-group">
-          <label for="endereco_municipio_descricao">Município</label>
-          <input type="text" id="endereco_municipio_descricao" formControlName="endereco_municipio_descricao" placeholder="Município" />
-        </div>
-  
-        <div class="form-group">
-          <label for="endereco_uf_sigla">UF</label>
-          <input type="text" id="endereco_uf_sigla" formControlName="endereco_uf_sigla" placeholder="UF" />
-        </div>
-      </div>
-  
-      <!-- Botões -->
-      <button type="submit" [disabled]="customerForm.invalid">Salvar</button>
-      <button type="button" (click)="router.navigate(['/customers'])">Cancelar</button>
-    </form>
-  </div>
+    </div>
+
+    <!-- Botões -->
+    <button type="submit" [disabled]="customerForm.invalid">Salvar</button>
+    <button type="buttons" >Cancelar</button>
+
+  </form>
+</div>

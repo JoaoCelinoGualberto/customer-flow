@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importações corretas
 import { CustomerService } from '../services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class CustomerFormComponent implements OnInit {
   customerId: number | null = null;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: FormBuilder, // FormBuilder está sendo injetado
     private customerService: CustomerService,
     private router: Router,
     private route: ActivatedRoute
@@ -22,13 +22,13 @@ export class CustomerFormComponent implements OnInit {
     this.customerForm = this.fb.group({
       nome: ['', Validators.required],
       fantasia: [''],
-      tipo_pessoa: ['Física', Validators.required], // Default value: 'Física'
+      tipo_pessoa: ['Física', Validators.required],
       cpf_cnpj: ['', Validators.required],
       rg_ie: [''],
       email: ['', [Validators.required, Validators.email]],
       fone: [''],
       celular: [''],
-      ativo: [true], // Default value: true (ativo)
+      ativo: [true],
       cadastro_endereco_padrao: this.fb.group({
         endereco: [''],
         endereco_numero: [''],
@@ -51,7 +51,7 @@ export class CustomerFormComponent implements OnInit {
   loadCustomer(id: number): void {
     this.customerService.getCustomerById(id).subscribe({
       next: (customer) => {
-        this.customerForm.patchValue(customer); // Set costumer data to form
+        this.customerForm.patchValue(customer); // Preenche o formulário com os dados do cliente
       },
       error: (error) => {
         console.error('Error loading customer', error);
@@ -63,7 +63,7 @@ export class CustomerFormComponent implements OnInit {
     if (this.customerForm.valid) {
       const customerData = {
         ...this.customerForm.value,
-        ...this.getDefaultValues(), // Add default value
+        ...this.getDefaultValues(), // Adiciona valores padrão
       };
 
       if (this.isEditMode && this.customerId) {
@@ -88,7 +88,7 @@ export class CustomerFormComponent implements OnInit {
     }
   }
 
-  // Return default values
+  // Retorna valores padrão
   getDefaultValues(): any {
     return {
       id: 0,

@@ -16,10 +16,8 @@
         <td>{{ customer.email }}</td>
         <td>
           <button [routerLink]="['/customers/edit', customer.id]" class="btn btn-secondary">Alterar</button>
-          <button (click)="onDelete(customer.id)" class="btn btn-danger">Excluir</button>
         </td>
       </tr>
     </tbody>
   </table>
-</div>
 </div>

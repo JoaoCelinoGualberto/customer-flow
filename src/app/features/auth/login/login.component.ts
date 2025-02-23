@@ -2,15 +2,19 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-login',
+  standalone: true, 
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string = ''; // Error Message
+  errorMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +36,7 @@ export class LoginComponent {
           this.router.navigate(['/Cadastro']);
         },
         error: (error) => {
-          this.errorMessage = 'Login failed. Please check your credentials.'; // Error Message
+          this.errorMessage = 'Login falhou. Verifique suas credenciais.';
         },
       });
     }
