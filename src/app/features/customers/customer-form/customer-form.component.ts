@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importações corretas
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // Importações corretas
 import { CustomerService } from '../services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
+  standalone: true,
+  imports: [ReactiveFormsModule],
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit {

@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
+import { Router, RouterLink } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-list',
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './customer-list.component.html',
   styleUrls: ['./customer-list.component.scss'],
 })

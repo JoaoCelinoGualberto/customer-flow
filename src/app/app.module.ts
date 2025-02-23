@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { CustomerListComponent } from './features/customers/customer-list/customer-list.component';
 import { CustomerFormComponent } from './features/customers/customer-form/customer-form.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // Definição das rotas
@@ -26,16 +26,16 @@ const routes: Routes = [
     AppComponent,
     CustomerListComponent,
     CustomerFormComponent,
-    // Declare outros componentes aqui
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpClient,
     RouterModule.forRoot(routes), // Import and configure RouterModule
     ReactiveFormsModule, // Adicione ReactiveFormsModule aqui
     FormsModule // Adicione FormsModule aqui
+    
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
