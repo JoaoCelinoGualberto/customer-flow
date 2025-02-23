@@ -1,59 +1,55 @@
-# CustomerFlow
+# CostumerFlow
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.8.
+**CustomerFlow** é um projeto que consome uma API para gerenciar clientes, oferecendo funcionalidades como login, criação, edição e listagem de clientes. Desenvolvido com Angular, é uma aplicação moderna e responsiva, ideal para para gerenciar dados de clientes.
 
-## Development server
+## Tecnologias Utilizadas
 
-To start a local development server, run:
+- **Angular** (v19.1.0)
+- **Bootstrap** (v5.3.3) - Para estilização e layout responsivo.
+- **Bootstrap Icons** (v1.11.3) - Ícones para melhorar a interface do usuário.
+- **RxJS** (v7.8.0) - Para programação reativa.
+- **TypeScript** (v5.7.2) - Linguagem principal do projeto.
+
+## Instalação
+
+Siga os passos abaixo para rodar o projeto localmente:
+
+### Pré-requisitos:
+
+Certifique-se de ter o **Node.js** e o **Angular CLI** instalados.
+
+### Clonar o repositório:
+
+```bash
+git clone https://github.com/JoaoCelinoGualberto/customer-flow
+cd customer-flow
+```
+
+### Instalar dependências:
+
+```bash
+npm install
+```
+
+### Rodar o projeto:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Acessar a aplicação:
 
-## Code scaffolding
+Abra o navegador e acesse [http://localhost:4200](http://localhost:4200).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Funcionalidades
 
-```bash
-ng generate component component-name
-```
+- **Login**: Autenticação de usuários.
+- **Criar Cliente**: Adicionar novos clientes ao sistema.
+- **Editar Cliente**: Atualizar informações de clientes existentes.
+- **Listar Clientes**: Visualizar lista de clientes cadastrados.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Autor
 
-```bash
-ng generate --help
-```
+**João Celino Gualberto**
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- [LinkedIn](https://www.linkedin.com/in/joaocelinogualberto)
