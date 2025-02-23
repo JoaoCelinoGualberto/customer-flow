@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // Importações corretas
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; 
 import { CustomerService } from '../services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-customer-form',
   templateUrl: './customer-form.component.html',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   styleUrls: ['./customer-form.component.scss'],
 })
 export class CustomerFormComponent implements OnInit {
@@ -16,7 +17,7 @@ export class CustomerFormComponent implements OnInit {
   customerId: number | null = null;
 
   constructor(
-    private fb: FormBuilder, // FormBuilder está sendo injetado
+    private fb: FormBuilder,
     private customerService: CustomerService,
     private router: Router,
     private route: ActivatedRoute

@@ -12,8 +12,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let customer of customers">
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
+        <td>{{ customer.nome }}</td>
+        <td>{{ customer.cadastro_contato_padrao?.email }}</td>
         <td>
           <button [routerLink]="['/customers/edit', customer.id]" class="btn btn-secondary">Alterar</button>
         </td>

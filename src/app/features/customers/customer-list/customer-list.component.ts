@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { Router, RouterLink } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-customer-list',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './customer-list.component.html',
   styleUrls: ['./customer-list.component.scss'],
 })
@@ -14,7 +14,7 @@ export class CustomerListComponent implements OnInit {
   customers: any[] = [];
   errorMessage: string = '';
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
     this.loadCustomers();
@@ -22,9 +22,13 @@ export class CustomerListComponent implements OnInit {
 
   loadCustomers(): void {
     this.customerService.getCustomers().subscribe({
-      next: (data) => (this.customers = data),
+      next: (data) => {
+        this.customers = data.itens;
+        console.log('Clientes carregados:', this.customers);
+      },
       error: (error) => {
-        this.errorMessage = 'Failed to load customers. Please try again later.';
+        this.errorMessage = 'Erro ao carregar clientes. Tente novamente mais tarde.';
+        console.error('Erro ao carregar clientes:', error);
       },
     });
   }

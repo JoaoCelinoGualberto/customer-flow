@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone: true, 
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -23,9 +23,9 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      empresa_id: ['219'],
-      loja_id: ['1']
+      senha: ['', Validators.required], 
+      empresa_id: [219, Validators.required], 
+      loja_id: [1, Validators.required], 
     });
   }
 
@@ -33,12 +33,15 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          this.router.navigate(['/Cadastro']);
+          this.router.navigate(['/customers']); 
         },
         error: (error) => {
-          this.errorMessage = 'Login falhou. Verifique suas credenciais.';
+          this.errorMessage = error.error?.message || 'Login falhou. Verifique suas credenciais.';
+          console.error('Erro no login:', error); // Log do erro no console
         },
       });
+    } else {
+      this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
     }
   }
 }

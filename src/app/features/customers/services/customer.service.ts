@@ -8,22 +8,22 @@ import { Observable } from 'rxjs';
 export class CustomerService {
   constructor(private apiService: ApiService) {}
 
-  // Get All Costumers
+  // Get All Customers
   getCustomers(): Observable<any> {
     return this.apiService.get('Cadastro');
   }
 
-  // Post a Costumer
+  // Post a Customer
   addCustomer(customer: any): Observable<any> {
     return this.apiService.post('Cadastro', customer);
   }
 
-  // Get a Costumer
+  // Get a Customer
   getCustomerById(id: number): Observable<any> {
     return this.apiService.get(`Cadastro/${id}`);
   }
   
-  // Put a Costumer
+  // Put a Customer
   updateCustomer(id: number, customer: any): Observable<any> {
     return this.apiService.put(`Cadastro/${id}`, customer);
   }
