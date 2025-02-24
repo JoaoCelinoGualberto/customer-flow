@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; 
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerService } from '../services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ export class CustomerFormComponent implements OnInit {
   customerForm: FormGroup;
   isEditMode = false;
   customerId: number | null = null;
+  errorMessages: string[] = []; 
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +23,7 @@ export class CustomerFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    // Initialize the form with default values and validators
     this.customerForm = this.fb.group({
       nome: ['', Validators.required],
       fantasia: [''],
@@ -44,17 +46,19 @@ export class CustomerFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Check if the form is in edit mode by checking the route parameter
     this.customerId = +this.route.snapshot.paramMap.get('id')!;
     if (this.customerId) {
       this.isEditMode = true;
-      this.loadCustomer(this.customerId);
+      this.loadCustomer(this.customerId); // Load customer data if in edit mode
     }
   }
 
+  // Load customer data by ID
   loadCustomer(id: number): void {
     this.customerService.getCustomerById(id).subscribe({
       next: (customer) => {
-        this.customerForm.patchValue(customer); // Preenche o formulário com os dados do cliente
+        this.customerForm.patchValue(customer); // Populate the form with customer data
       },
       error: (error) => {
         console.error('Error loading customer', error);
@@ -62,36 +66,59 @@ export class CustomerFormComponent implements OnInit {
     });
   }
 
+  // Handle form submission
   onSubmit(): void {
+    this.errorMessages = []; // Clear previous error messages
+  
     if (this.customerForm.valid) {
       const customerData = {
         ...this.customerForm.value,
-        ...this.getDefaultValues(), // Adiciona valores padrão
+        ...this.getDefaultValues(), // Add default values
       };
-
+  
       if (this.isEditMode && this.customerId) {
+        // Update existing customer
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
           next: () => {
-            this.router.navigate(['/customers']);
+            this.router.navigate(['/customers']); // Navigate back to the customer list
           },
           error: (error) => {
-            console.error('Erro ao atualizar cliente', error);
+            console.error('Error updating customer', error);
+            this.handleApiError(error); // Handle API errors
           },
         });
       } else {
+        // Add a new customer
         this.customerService.addCustomer(customerData).subscribe({
           next: () => {
-            this.router.navigate(['/customers']);
+            this.router.navigate(['/customers']); // Navigate back to the customer list
           },
           error: (error) => {
-            console.error('Erro ao adicionar cliente', error);
+            console.error('Error adding customer', error);
+            this.handleApiError(error); // Handle API errors
           },
         });
       }
+    } else {
+      this.customerForm.markAllAsTouched(); // Mark all fields as touched to display validation errors
     }
   }
 
-  // Retorna valores padrão
+  // Handle API errors
+  handleApiError(error: any): void {
+    if (error.error && error.error.errors) {
+      this.errorMessages = error.error.errors; // Store error messages
+    } else {
+      this.errorMessages = ['Um erro inesperado aconteceu. Tente novamente.'];
+    }
+  }
+
+  // Navigate back to the customer list
+  goBack(): void {
+    this.router.navigate(['/customers']);
+  }
+
+  // Return default values for the customer
   getDefaultValues(): any {
     return {
       id: 0,
@@ -100,7 +127,8 @@ export class CustomerFormComponent implements OnInit {
       usuario_ultima_alteracao_nome: 'Admin',
       dt_inclusao: new Date().toISOString(),
       usuario_inclusao_id: 0,
-      guid: 'string',
+      guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      ativo: true,
       emp_id: 0,
       chk_emp_disponivel: true,
       cadastro_id: 0,
@@ -109,9 +137,11 @@ export class CustomerFormComponent implements OnInit {
       desconto_auto_aliq: 0,
       obs_nfe: '',
       consumidor_final: true,
-      tipo_preco_venda: 'Padrão',
+      tipo_preco_venda: 'SomenteVenda',
       cadastro_empresa_id: 0,
-      cadastro_empresa_guid: 'string',
+      cadastro_empresa_guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      fantasia: '',
+      tipo_pessoa: 'Física',
       tipo_cadastro: 'Cliente',
       cadastro_grupo_id: 0,
       cadastro_tipo_id: 0,
@@ -152,11 +182,37 @@ export class CustomerFormComponent implements OnInit {
       dados_banc_fone_ag: '',
       dados_banc_obs: '',
       obs_geral: '',
-      tipo_regime_apuracao: '',
+      tipo_regime_apuracao: 'Simples',
       nome_conjuge: '',
       inscricao_municipal: '',
       dt_casamento: new Date().toISOString(),
-      id_print_wayy: '',
+      id_print_wayy: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+      cadastro_endereco_padrao: {
+        id: 0,
+        dt_ultima_alteracao: new Date().toISOString(),
+        usuario_ultima_alteracao_id: 0,
+        usuario_ultima_alteracao_nome: 'Admin',
+        dt_inclusao: new Date().toISOString(),
+        usuario_inclusao_id: 0,
+        guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+        ativo: true,
+        cadastro_id: 0,
+        principal: true,
+        cobranca: true,
+        ie_produtor_rural: '',
+        descricao: '',
+        endereco: '',
+        endereco_numero: '',
+        endereco_bairro: '',
+        endereco_complemento: '',
+        endereco_cep: '',
+        endereco_municipio_codigo_ibge: 0,
+        endereco_municipio_descricao: '',
+        endereco_uf_sigla: '',
+        endereco_uf_codigo: 0,
+        endereco_municipio_codigo_pais: 0,
+        endereco_municipio_descricao_pais: '',
+      },
       cadastro_contato_padrao: {
         id: 0,
         dt_ultima_alteracao: new Date().toISOString(),
@@ -164,7 +220,7 @@ export class CustomerFormComponent implements OnInit {
         usuario_ultima_alteracao_nome: 'Admin',
         dt_inclusao: new Date().toISOString(),
         usuario_inclusao_id: 0,
-        guid: 'string',
+        guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
         ativo: true,
         cadastro_id: 0,
         descricao: '',
