@@ -35,8 +35,11 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid">
-          Login
+        <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid || isLoading">
+          <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading">
+            <i class="bi bi-arrow-repeat loading-icon"></i> Carregando...
+          </span>
         </button>
 
         <div *ngIf="errorMessage" class="alert alert-danger mt-3">

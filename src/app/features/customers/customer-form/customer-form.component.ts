@@ -163,7 +163,7 @@ export class CustomerFormComponent implements OnInit {
             setTimeout(() => {
               this.successMessage = null;
               this.router.navigate(['/customers']);
-            }, 3000);
+            }, 2000);
           },
           error: (error) => {
             this.isLoading = false;
@@ -180,7 +180,7 @@ export class CustomerFormComponent implements OnInit {
             setTimeout(() => {
               this.successMessage = null;
               this.router.navigate(['/customers']);
-            }, 3000);
+            }, 2000);
           },
           error: (error) => {
             this.isLoading = false;
