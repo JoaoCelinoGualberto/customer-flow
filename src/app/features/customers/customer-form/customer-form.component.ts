@@ -141,40 +141,47 @@ export class CustomerFormComponent implements OnInit {
   onSubmit(): void {
     this.errorMessages = [];
     if (this.customerForm.valid) {
-      this.isLoading = true; 
+      this.isLoading = true;
+      
+      // Create the customerData object with the form values
       const customerData = {
         ...this.customerForm.value,
-        ...this.getDefaultValues(), 
+        ...this.getDefaultValues(),
       };
   
+      // If in edit mode, add the customer ID to the object
       if (this.isEditMode && this.customerId) {
-        // Update customer
+        customerData.id = this.customerId; // Add the customer ID
+      }
+  
+      if (this.isEditMode && this.customerId) {
+        // Update the customer
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
           next: () => {
-            this.isLoading = false; 
-            this.successMessage = 'Cliente atualizado com sucesso!';
-            setTimeout(() => this.successMessage = null, 3000); 
-            this.router.navigate(['/customers']); 
+            this.isLoading = false;
+            this.successMessage = 'Customer updated successfully!';
+            setTimeout(() => this.successMessage = null, 3000);
+            this.router.navigate(['/customers']);
           },
           error: (error) => {
             this.isLoading = false;
-            console.error('Erro ao atualizar cliente', error);
-            this.handleApiError(error); 
+            console.error('Error updating customer', error);
+            this.handleApiError(error);
           },
         });
       } else {
-        // New customer
+        // Add a new customer
         this.customerService.addCustomer(customerData).subscribe({
           next: () => {
             this.isLoading = false;
-            this.successMessage = 'Cliente adicionado com sucesso!';
+            this.successMessage = 'Customer added successfully!';
             setTimeout(() => this.successMessage = null, 3000);
-            this.router.navigate(['/customers']); // Go back to customers list
+            this.router.navigate(['/customers']);
           },
           error: (error) => {
-            this.isLoading = false; 
-            console.error('Erro ao adicionar cliente', error);
-            this.handleApiError(error); 
+            this.isLoading = false;
+            console.error('Error adding customer', error);
+            this.handleApiError(error);
           },
         });
       }
