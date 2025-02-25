@@ -1,4 +1,4 @@
-# CostumerFlow
+# CustomerFlow
 
 **CustomerFlow** é um projeto que consome uma API para gerenciar clientes, oferecendo funcionalidades como login, criação, edição e listagem de clientes. Desenvolvido com Angular, é uma aplicação moderna e responsiva, ideal para para gerenciar dados de clientes.
 
