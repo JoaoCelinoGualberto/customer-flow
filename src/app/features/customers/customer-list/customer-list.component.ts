@@ -31,7 +31,6 @@ export class CustomerListComponent implements OnInit {
     this.customerService.getCustomers().subscribe({
       next: (data) => {
         this.customers = data.itens; // Assign fetched data to the customers array
-        console.log('Clientes carregados:', data);
       },
       error: (error) => {
         console.error('Erro ao carregar clientes:', error);

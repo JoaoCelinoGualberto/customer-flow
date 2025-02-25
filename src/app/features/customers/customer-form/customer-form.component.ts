@@ -15,7 +15,7 @@ export class CustomerFormComponent implements OnInit {
   customerForm: FormGroup;
   isEditMode = false;
   customerId: number | null = null;
-  errorMessages: string[] = []; 
+  errorMessages: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -27,21 +27,89 @@ export class CustomerFormComponent implements OnInit {
     this.customerForm = this.fb.group({
       nome: ['', Validators.required],
       fantasia: [''],
-      tipo_pessoa: ['Física', Validators.required],
+      tipo_pessoa: ['Fisica', Validators.required],
       cpf_cnpj: ['', Validators.required],
-      rg_ie: [''],
-      email: ['', [Validators.required, Validators.email]],
-      fone: [''],
-      celular: [''],
-      ativo: [true],
+      rg_ie: [0], // Já está correto (número)
+      ativo: [true, Validators.required],
+      email: ['', [Validators.email]],
+      fone: [null], // Alterado para null (número ou null)
+      celular: [null], // Alterado para null (número ou null)
       cadastro_endereco_padrao: this.fb.group({
-        endereco: [''],
-        endereco_numero: [''],
-        endereco_bairro: [''],
-        endereco_cep: [''],
-        endereco_municipio_descricao: [''],
-        endereco_uf_sigla: [''],
+        endereco: '',
+        endereco_numero: '',
+        endereco_bairro: '',
+        endereco_cep: '',
+        endereco_municipio_descricao: '', // Remover se não for necessário
+        endereco_municipio_codigo_ibge: 1721000, // Alterado para número (exemplo)
+        endereco_uf_sigla: '', // Remover se não for necessário
+        ativo: [true],
+        principal: true,
+        cobranca: false,
+        descricao: 'PRINCIPAL',
+        ie_produtor_rural: '1111'
       }),
+      // Novos campos adicionados
+      cadastro_empresa_guid: [null],
+      cadastro_empresa_id: [null],
+      cadastro_grupo_id: [null],
+      cadastro_profissao_id: [null],
+      cadastro_tipo_id: [0],
+      chk_alterar_nome: [false],
+      chk_emp_disponivel: [true],
+      consumidor_final: [false],
+      dados_banc_agencia: [null],
+      dados_banc_data_conta: [null],
+      dados_banc_fone_ag: [null],
+      dados_banc_nome_banco: [null],
+      dados_banc_num_banco: [null],
+      dados_banc_num_conta: [null],
+      dados_banc_obs: [null],
+      dados_banc_tipo_conta: [null],
+      dados_prof_cargo: [null],
+      dados_prof_cnpj: [null],
+      dados_prof_data_admissao: [null],
+      dados_prof_endereco: [null],
+      dados_prof_endereco_bairro: [null],
+      dados_prof_endereco_cep: [null],
+      dados_prof_endereco_municipio_codigo_ibge: [null],
+      dados_prof_endereco_numero: [null],
+      dados_prof_fone: [null],
+      dados_prof_nome_empresa: [null],
+      dados_prof_ocupacao: [null],
+      dados_prof_vlr_outras_rendas: [null],
+      dados_prof_vlr_renda_mensal: [null],
+      desconto_auto_aliq: [null],
+      desconto_auto_aplicar: [false],
+      dt_casamento: [null],
+      dt_inclusao: [null],
+      dt_nascimento: [null],
+      dt_ultima_alteracao: [null],
+      emp_id: [1],
+      estado_civil: [null],
+      fax: [null],
+      guid: [null],
+      id_print_wayy: [null],
+      ie_diferido: [null],
+      inscricao_municipal: [null],
+      naturalidade_cidade: [null],
+      naturalidade_uf: [null],
+      nome_conjuge: [null],
+      nome_mae: [null],
+      nome_pai: [null],
+      obs_geral: [null],
+      obs_nfe: [null],
+      obs_venda: [null],
+      qtd_dependentes: [null],
+      rg_ie_uf: [null],
+      sexo: [null],
+      site: [null],
+      tipo_cadastro: ['Cliente'],
+      tipo_preco_venda: [null],
+      tipo_regime_apuracao: [null],
+      usuario_inclusao_id: [null],
+      usuario_ultima_alteracao_id: [null],
+      usuario_ultima_alteracao_nome: [null],
+      vlr_limite_credito: [null],
     });
   }
 
@@ -58,24 +126,24 @@ export class CustomerFormComponent implements OnInit {
   loadCustomer(id: number): void {
     this.customerService.getCustomerById(id).subscribe({
       next: (customer) => {
-        this.customerForm.patchValue(customer); // Populate the form with customer data
+        this.customerForm.patchValue(customer); 
       },
       error: (error) => {
         console.error('Error loading customer', error);
       },
     });
   }
-
   // Handle form submission
   onSubmit(): void {
     this.errorMessages = []; // Clear previous error messages
-  
     if (this.customerForm.valid) {
       const customerData = {
         ...this.customerForm.value,
         ...this.getDefaultValues(), // Add default values
       };
-  
+      console.log('customerData', customerData)
+      console.log('this.customerForm.value', this.customerForm.value)
+
       if (this.isEditMode && this.customerId) {
         // Update existing customer
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
@@ -89,6 +157,7 @@ export class CustomerFormComponent implements OnInit {
         });
       } else {
         // Add a new customer
+
         this.customerService.addCustomer(customerData).subscribe({
           next: () => {
             this.router.navigate(['/customers']); // Navigate back to the customer list
@@ -121,114 +190,21 @@ export class CustomerFormComponent implements OnInit {
   // Return default values for the customer
   getDefaultValues(): any {
     return {
-      id: 0,
-      dt_ultima_alteracao: new Date().toISOString(),
-      usuario_ultima_alteracao_id: 0,
-      usuario_ultima_alteracao_nome: 'Admin',
-      dt_inclusao: new Date().toISOString(),
-      usuario_inclusao_id: 0,
-      guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      ativo: true,
-      emp_id: 0,
-      chk_emp_disponivel: true,
-      cadastro_id: 0,
-      chk_alterar_nome: true,
-      desconto_auto_aplicar: true,
-      desconto_auto_aliq: 0,
-      obs_nfe: '',
-      consumidor_final: true,
-      tipo_preco_venda: 'SomenteVenda',
-      cadastro_empresa_id: 0,
-      cadastro_empresa_guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      fantasia: '',
-      tipo_pessoa: 'Física',
-      tipo_cadastro: 'Cliente',
-      cadastro_grupo_id: 0,
-      cadastro_tipo_id: 0,
-      cadastro_profissao_id: 0,
-      rg_ie_uf: '',
-      ie_diferido: '',
-      dt_nascimento: new Date().toISOString(),
-      vlr_limite_credito: 0,
-      obs_venda: '',
-      fax: '',
-      site: '',
-      sexo: '',
-      estado_civil: '',
-      naturalidade_cidade: '',
-      naturalidade_uf: '',
-      nome_pai: '',
-      nome_mae: '',
-      qtd_dependentes: 0,
-      dados_prof_nome_empresa: '',
-      dados_prof_cnpj: '',
-      dados_prof_fone: '',
-      dados_prof_data_admissao: new Date().toISOString(),
-      dados_prof_ocupacao: '',
-      dados_prof_cargo: '',
-      dados_prof_vlr_renda_mensal: 0,
-      dados_prof_vlr_outras_rendas: 0,
-      dados_prof_endereco: '',
-      dados_prof_endereco_numero: '',
-      dados_prof_endereco_bairro: '',
-      dados_prof_endereco_cep: '',
-      dados_prof_endereco_municipio_codigo_ibge: 0,
-      dados_banc_num_banco: 0,
-      dados_banc_nome_banco: '',
-      dados_banc_agencia: '',
-      dados_banc_num_conta: '',
-      dados_banc_tipo_conta: '',
-      dados_banc_data_conta: new Date().toISOString(),
-      dados_banc_fone_ag: '',
-      dados_banc_obs: '',
-      obs_geral: '',
-      tipo_regime_apuracao: 'Simples',
-      nome_conjuge: '',
-      inscricao_municipal: '',
-      dt_casamento: new Date().toISOString(),
-      id_print_wayy: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      cadastro_endereco_padrao: {
-        id: 0,
-        dt_ultima_alteracao: new Date().toISOString(),
-        usuario_ultima_alteracao_id: 0,
-        usuario_ultima_alteracao_nome: 'Admin',
-        dt_inclusao: new Date().toISOString(),
-        usuario_inclusao_id: 0,
-        guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-        ativo: true,
-        cadastro_id: 0,
-        principal: true,
-        cobranca: true,
-        ie_produtor_rural: '',
-        descricao: '',
-        endereco: '',
-        endereco_numero: '',
-        endereco_bairro: '',
-        endereco_complemento: '',
-        endereco_cep: '',
-        endereco_municipio_codigo_ibge: 0,
-        endereco_municipio_descricao: '',
-        endereco_uf_sigla: '',
-        endereco_uf_codigo: 0,
-        endereco_municipio_codigo_pais: 0,
-        endereco_municipio_descricao_pais: '',
-      },
       cadastro_contato_padrao: {
         id: 0,
         dt_ultima_alteracao: new Date().toISOString(),
         usuario_ultima_alteracao_id: 0,
-        usuario_ultima_alteracao_nome: 'Admin',
+        usuario_ultima_alteracao_nome: 'string',
         dt_inclusao: new Date().toISOString(),
         usuario_inclusao_id: 0,
-        guid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
         ativo: true,
         cadastro_id: 0,
-        descricao: '',
-        fone: '',
-        email: '',
+        descricao: 'string',
+        fone: 'string',
+        email: 'string',
         enviar_orcamento: true,
         enviar_nf: true,
-        enviar_boleto: true,
+        enviar_boleto: true
       },
     };
   }
