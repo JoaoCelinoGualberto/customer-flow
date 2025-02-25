@@ -32,23 +32,23 @@ export class CustomerFormComponent implements OnInit {
       rg_ie: [],
       ativo: [true, Validators.required],
       email: ['', [Validators.email]],
-      fone: [null], 
+      fone: [null],
       celular: [null],
       cadastro_endereco_padrao: this.fb.group({
         endereco: '',
         endereco_numero: '',
         endereco_bairro: '',
         endereco_cep: '',
-        endereco_municipio_descricao: '', 
-        endereco_municipio_codigo_ibge: 1721000, 
-        endereco_uf_sigla: '', 
+        endereco_municipio_descricao: '',
+        endereco_municipio_codigo_ibge: 1721000,
+        endereco_uf_sigla: '',
         ativo: [true],
         principal: true,
         cobranca: false,
         descricao: 'PRINCIPAL',
         ie_produtor_rural: '1111'
       }),
-     
+
       cadastro_empresa_guid: [null],
       cadastro_empresa_id: [null],
       cadastro_grupo_id: [null],
@@ -114,7 +114,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   isLoading = false;
-  successMessage: string | null = null; 
+  successMessage: string | null = null;
 
 
   ngOnInit(): void {
@@ -142,30 +142,32 @@ export class CustomerFormComponent implements OnInit {
     this.errorMessages = [];
     if (this.customerForm.valid) {
       this.isLoading = true;
-      
+
       // Create the customerData object with the form values
       const customerData = {
         ...this.customerForm.value,
         ...this.getDefaultValues(),
       };
-  
+
       // If in edit mode, add the customer ID to the object
       if (this.isEditMode && this.customerId) {
         customerData.id = this.customerId; // Add the customer ID
       }
-  
+
       if (this.isEditMode && this.customerId) {
         // Update the customer
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
           next: () => {
             this.isLoading = false;
-            this.successMessage = 'Customer updated successfully!';
-            setTimeout(() => this.successMessage = null, 3000);
-            this.router.navigate(['/customers']);
+            this.successMessage = 'Cliente atualizado com sucesso! :)';
+            setTimeout(() => {
+              this.successMessage = null;
+              this.router.navigate(['/customers']);
+            }, 3000);
           },
           error: (error) => {
             this.isLoading = false;
-            console.error('Error updating customer', error);
+            console.error('Error ao atualizar cliente', error);
             this.handleApiError(error);
           },
         });
@@ -174,13 +176,15 @@ export class CustomerFormComponent implements OnInit {
         this.customerService.addCustomer(customerData).subscribe({
           next: () => {
             this.isLoading = false;
-            this.successMessage = 'Customer added successfully!';
-            setTimeout(() => this.successMessage = null, 3000);
-            this.router.navigate(['/customers']);
+            this.successMessage = 'Cliente adicionado com sucesso! :)';
+            setTimeout(() => {
+              this.successMessage = null;
+              this.router.navigate(['/customers']);
+            }, 3000);
           },
           error: (error) => {
             this.isLoading = false;
-            console.error('Error adding customer', error);
+            console.error('Erro ao adicionar cliente', error);
             this.handleApiError(error);
           },
         });
@@ -189,7 +193,7 @@ export class CustomerFormComponent implements OnInit {
       this.customerForm.markAllAsTouched(); // Mark all fields as touched
     }
   }
-  
+
 
   // Handle API errors
   handleApiError(error: any): void {
