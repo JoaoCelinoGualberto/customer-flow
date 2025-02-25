@@ -34,7 +34,7 @@
         <tr *ngFor="let customer of customers" (click)="editCustomer(customer.id)" style="cursor: pointer;">
           <td>{{ customer.nome }}</td>
           <td>{{ customer.email }}</td>
-          <td>{{ customer.cadastro_contato_padrao?.fone || 'N/A' }}</td>
+          <td>{{ customer.fone || 'N/A' }}</td>
           <td>
             {{ customer.cadastro_endereco_padrao?.endereco }},
             {{ customer.cadastro_endereco_padrao?.endereco_numero }} -

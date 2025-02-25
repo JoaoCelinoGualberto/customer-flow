@@ -7,21 +7,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CustomerListComponent } from './features/customers/customer-list/customer-list.component';
 import { CustomerFormComponent } from './features/customers/customer-form/customer-form.component';
-import { AuthGuard } from './core/guards/auth.guard';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
-// Definição das rotas
-const routes: Routes = [
-  { 
-    path: 'auth',
-    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule)
-  },
-  { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] },
-  { path: 'customers/new', component: CustomerFormComponent, canActivate: [AuthGuard] },
-  { path: 'customers/edit/:id', component: CustomerFormComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth/login' }
-];
 
 @NgModule({
   declarations: [
@@ -32,18 +18,9 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClient, 
-    RouterModule.forRoot(routes),
     ReactiveFormsModule,
     FormsModule 
   ],
-  providers: [
-    AuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
