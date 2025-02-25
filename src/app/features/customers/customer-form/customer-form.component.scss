@@ -86,7 +86,7 @@
           transition: background-color 0.3s ease;
   
           &:hover {
-            background-color: darken(#28a745, 10%);
+            background-color: color-mix(in srgb, #28a745 90%, black 10%);
           }
   
           &:disabled {
@@ -107,9 +107,19 @@
           transition: background-color 0.3s ease;
   
           &:hover {
-            background-color: darken(#6c757d, 10%);
+            background-color: #5a6268;
           }
         }
       }
     }
   }
+  .loading-icon {
+    margin-right: 0.5rem;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

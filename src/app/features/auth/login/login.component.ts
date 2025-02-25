@@ -37,7 +37,7 @@ export class LoginComponent {
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Login falhou. Verifique suas credenciais.';
-          console.error('Erro no login:', error); // Log do erro no console
+          console.error('Erro no login:', error); 
         },
       });
     } else {

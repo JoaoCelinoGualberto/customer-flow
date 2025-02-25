@@ -34,7 +34,7 @@
       transition: background-color 0.3s ease;
   
       &:hover {
-        background-color: darken(#007bff, 10%);
+        background-color: #5a6268;
       }
   
       i {
@@ -97,7 +97,7 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
   
         &:hover {
-          background-color: darken(#ffc107, 10%);
+          background-color: #e0a800;
           transform: scale(1.1);
         }
   

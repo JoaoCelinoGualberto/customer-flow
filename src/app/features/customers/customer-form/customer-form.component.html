@@ -104,8 +104,17 @@
     </div>
 
     <div class="button-group mt-4">
-      <button type="submit" [disabled]="customerForm.invalid" class="btn btn-success me-2">Salvar</button>
+      <button type="submit" [disabled]="customerForm.invalid || isLoading" class="btn btn-success me-2">
+        <i *ngIf="isLoading" class="bi bi-arrow-repeat loading-icon"></i>
+        <span *ngIf="!isLoading">Salvar</span>
+        <span *ngIf="isLoading">Salvando...</span>
+      </button>
+      
       <button type="button" class="btn btn-secondary" (click)="goBack()">Cancelar</button>
     </div>
   </form>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+  
 </div>

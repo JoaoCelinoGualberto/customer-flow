@@ -29,26 +29,26 @@ export class CustomerFormComponent implements OnInit {
       fantasia: [''],
       tipo_pessoa: ['Fisica', Validators.required],
       cpf_cnpj: ['', Validators.required],
-      rg_ie: [0], // Já está correto (número)
+      rg_ie: [],
       ativo: [true, Validators.required],
       email: ['', [Validators.email]],
-      fone: [null], // Alterado para null (número ou null)
-      celular: [null], // Alterado para null (número ou null)
+      fone: [null], 
+      celular: [null],
       cadastro_endereco_padrao: this.fb.group({
         endereco: '',
         endereco_numero: '',
         endereco_bairro: '',
         endereco_cep: '',
-        endereco_municipio_descricao: '', // Remover se não for necessário
-        endereco_municipio_codigo_ibge: 1721000, // Alterado para número (exemplo)
-        endereco_uf_sigla: '', // Remover se não for necessário
+        endereco_municipio_descricao: '', 
+        endereco_municipio_codigo_ibge: 1721000, 
+        endereco_uf_sigla: '', 
         ativo: [true],
         principal: true,
         cobranca: false,
         descricao: 'PRINCIPAL',
         ie_produtor_rural: '1111'
       }),
-      // Novos campos adicionados
+     
       cadastro_empresa_guid: [null],
       cadastro_empresa_id: [null],
       cadastro_grupo_id: [null],
@@ -113,6 +113,10 @@ export class CustomerFormComponent implements OnInit {
     });
   }
 
+  isLoading = false;
+  successMessage: string | null = null; 
+
+
   ngOnInit(): void {
     // Check if the form is in edit mode by checking the route parameter
     this.customerId = +this.route.snapshot.paramMap.get('id')!;
@@ -126,7 +130,7 @@ export class CustomerFormComponent implements OnInit {
   loadCustomer(id: number): void {
     this.customerService.getCustomerById(id).subscribe({
       next: (customer) => {
-        this.customerForm.patchValue(customer); 
+        this.customerForm.patchValue(customer);
       },
       error: (error) => {
         console.error('Error loading customer', error);
@@ -135,43 +139,50 @@ export class CustomerFormComponent implements OnInit {
   }
   // Handle form submission
   onSubmit(): void {
-    this.errorMessages = []; // Clear previous error messages
+    this.errorMessages = [];
     if (this.customerForm.valid) {
+      this.isLoading = true; 
       const customerData = {
         ...this.customerForm.value,
-        ...this.getDefaultValues(), // Add default values
+        ...this.getDefaultValues(), 
       };
-      console.log('customerData', customerData)
-      console.log('this.customerForm.value', this.customerForm.value)
-
+  
       if (this.isEditMode && this.customerId) {
-        // Update existing customer
+        // Atualizar cliente existente
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
           next: () => {
-            this.router.navigate(['/customers']); // Navigate back to the customer list
+            this.isLoading = false; 
+            this.successMessage = 'Cliente atualizado com sucesso!';
+            setTimeout(() => this.successMessage = null, 3000); 
+            this.router.navigate(['/customers']); 
           },
           error: (error) => {
-            console.error('Error updating customer', error);
-            this.handleApiError(error); // Handle API errors
+            this.isLoading = false;
+            console.error('Erro ao atualizar cliente', error);
+            this.handleApiError(error); 
           },
         });
       } else {
-        // Add a new customer
-
+        // New customer
         this.customerService.addCustomer(customerData).subscribe({
           next: () => {
-            this.router.navigate(['/customers']); // Navigate back to the customer list
+            this.isLoading = false;
+            this.successMessage = 'Cliente adicionado com sucesso!';
+            setTimeout(() => this.successMessage = null, 3000);
+            this.router.navigate(['/customers']); // Go back to customers list
           },
           error: (error) => {
-            console.error('Error adding customer', error);
-            this.handleApiError(error); // Handle API errors
+            this.isLoading = false; 
+            console.error('Erro ao adicionar cliente', error);
+            this.handleApiError(error); 
           },
         });
       }
     } else {
-      this.customerForm.markAllAsTouched(); // Mark all fields as touched to display validation errors
+      this.customerForm.markAllAsTouched(); // Mark all fields as touched
     }
   }
+  
 
   // Handle API errors
   handleApiError(error: any): void {
