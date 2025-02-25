@@ -44,9 +44,9 @@ Abra o navegador e acesse [http://localhost:4200](http://localhost:4200).
 ## Funcionalidades
 
 - **Login**: Autenticação de usuários.
+- **Listar Clientes**: Visualizar lista de clientes cadastrados.
 - **Criar Cliente**: Adicionar novos clientes ao sistema.
 - **Editar Cliente**: Atualizar informações de clientes existentes.
-- **Listar Clientes**: Visualizar lista de clientes cadastrados.
 
 ## Autor
 
