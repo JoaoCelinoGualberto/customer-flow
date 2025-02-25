@@ -148,7 +148,7 @@ export class CustomerFormComponent implements OnInit {
       };
   
       if (this.isEditMode && this.customerId) {
-        // Atualizar cliente existente
+        // Update customer
         this.customerService.updateCustomer(this.customerId, customerData).subscribe({
           next: () => {
             this.isLoading = false; 
