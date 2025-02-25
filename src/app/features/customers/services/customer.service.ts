@@ -23,7 +23,7 @@ export class CustomerService {
     return this.apiService.get(`Cadastro/${id}`);
   }
   
-  // Put a Customer
+  // Update a Customer
   updateCustomer(id: number, customer: any): Observable<any> {
     return this.apiService.put(`Cadastro/${id}`, customer);
   }

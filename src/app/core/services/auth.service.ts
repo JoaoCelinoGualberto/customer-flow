@@ -27,7 +27,7 @@ export class AuthService {
     };
 
     return this.apiService.post<LoginResponse>('Auth/login', body).pipe(
-      retry(1), // Tenta a requisição novamente uma vez em caso de erro
+      retry(1), // Try request again
       tap((response: LoginResponse) => {
         this.isAuthenticated = true;
         localStorage.setItem('isAuthenticated', 'true');

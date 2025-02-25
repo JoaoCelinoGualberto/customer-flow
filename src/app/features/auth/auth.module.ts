@@ -5,12 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [], // Remova LoginComponent daqui
+  declarations: [], 
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'login', component: LoginComponent }, // Rota filha para o AuthModule
+      { path: 'login', component: LoginComponent }, 
     ]),
   ],
 })
